@@ -1,0 +1,26 @@
+# Game files — the game is paid, users supply their own copy.
+blacksouls2/Audio/
+blacksouls2/Graphics/
+blacksouls2/Fonts/
+blacksouls2/Movies/
+blacksouls2/Game.ini
+blacksouls2/Game.rgss3a
+blacksouls2/Game.exe
+blacksouls2/System/
+blacksouls2/Bonus/
+
+# Translations the user drops in; only the guide is tracked.
+blacksouls2/patches/*
+!blacksouls2/patches/README.txt
+
+# Runtime artefacts
+blacksouls2/stdlib/
+blacksouls2/Save*.rvdata2
+blacksouls2/log.txt
+
+# Build output
+dist/
+*.zip
+
+# Other
+testing_thread.txt
