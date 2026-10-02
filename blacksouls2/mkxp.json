@@ -34,7 +34,7 @@
     // archive. Empty by default, which leaves the game exactly as shipped.
     "patches": ["patches"],
 
-    // ~2400 asset files, cache the lookups.
+    // ~2300 asset files before any translation, cache the lookups.
     "pathCache": true,
     "allowSymlinks": false
 

@@ -1,6 +1,6 @@
 ## Notes
 
-Thanks to [Eeny, meeny, miny, moe?](https://store.steampowered.com/app/3855540/BLACK_SOULS_II/) for creating BLACK SOULS II, which takes the fairy tale cast of the first game somewhere darker and keeps the relationships you build with them quietly deciding how it ends.
+Thanks to [Eeny, meeny, miny, moe?](https://store.steampowered.com/app/3855540/BLACK_SOULS_II/) for creating BLACK SOULS II, which takes the fairy tale cast of the first game somewhere considerably darker.
 
 The game is a paid title, so this port ships the engine only. Copy `Audio/`, `Graphics/`, `Fonts/`, `Movies/`, `Game.ini` and `Game.rgss3a` from your own installation into the `blacksouls2` folder, alongside the engine. `Game.exe`, `System/`, `ver.txt` and the `.vdf` files are Windows or Steam only and are not needed.
 
