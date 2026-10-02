@@ -22,7 +22,18 @@
         "rtr": false,
         "exp": false,
         "runtime": [],
-        "store": [],
+        "store": [
+            {
+                "name": "Steam",
+                "gameurl": "https://store.steampowered.com/app/3855540/BLACK_SOULS_II/",
+                "developerurl": "https://store.steampowered.com/publisher/otakuplan"
+            },
+            {
+                "name": "DLsite",
+                "gameurl": "https://www.dlsite.com/maniax/work/=/product_id/RJ293183.html",
+                "developerurl": "https://www.dlsite.com/maniax/circle/profile/=/maker_id/RG33488.html"
+            }
+        ],
         "availability": "paid",
         "reqs": [],
         "arch": [

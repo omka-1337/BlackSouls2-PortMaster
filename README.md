@@ -4,6 +4,8 @@ Thanks to [Eeny, meeny, miny, moe?](https://store.steampowered.com/app/3855540/B
 
 The game is a paid title, so this port ships the engine only. Copy `Audio/`, `Graphics/`, `Fonts/`, `Movies/`, `Game.ini` and `Game.rgss3a` from your own installation into the `blacksouls2` folder, alongside the engine. `Game.exe`, `System/`, `ver.txt` and the `.vdf` files are Windows or Steam only and are not needed.
 
+The Steam release ships a heavily reduced build of the game: its `Game.rgss3a` declares 17 maps where the full release has 409. The publisher offers a free official patch that restores the full game, and it has to be applied to the Steam copy before the files are worth copying here, otherwise the port faithfully runs the reduced build. A copy bought on DLsite is complete as it is. This port was tested against both a reduced and a full set of files.
+
 The loose `Graphics/` folder matters here. It holds the RTP artwork the game draws on, and only four of its files also exist inside `Game.rgss3a`; for those four the archive wins, which is what the game expects, since the archived copies are its own and the loose ones are the stock defaults.
 
 The game renders at 640x480, so it is pixel for pixel on a 640x480 panel with no scaling.
@@ -25,7 +27,7 @@ patches/
 
 Some archives wrap everything in a single top level folder, in which case copy that folder's contents rather than the folder itself. Leave out anything Windows specific: `Game.exe`, `System/`, `*.dll`, `*.vdf`, `Game.rvproj2` and the translation's own `Game.ini` are all unused here. Delete the folders again to go back to English.
 
-A save can stop loading when you change this folder. Saves sit next to the engine and are never touched by adding or removing a translation, but a save stores objects of the classes the game's scripts define, so a translation that adds such a class makes its saves unreadable once it is removed, and the other way round. The Russian translation does exactly that, by way of `Game_Map_Effects`, so its saves and the English ones are not interchangeable. Another translation may well add nothing that reaches a save, in which case the save travels fine. The game stays quiet either way: `DataManager.load_game` swallows the error, so the load screen buzzes and sits there as though the button did nothing. Restore the translation to the state the save was made in and it loads. This is how the game behaves on Windows too.
+A save belongs to the script set that made it. Saves sit next to the engine and are never touched by what you put in `patches/`, but a save stores objects of the classes the game's scripts define, and will not load under a script set that is missing one of them. The reduced Steam build and the full build differ that way, and so can two translations. That is what bit here during testing: a save made against the full data would not load against the reduced Steam scripts, because it carried a `Game_Map_Effects` object those scripts have never heard of. The game stays quiet about it: `DataManager.load_game` swallows the error, so the load screen buzzes and sits there as though the button did nothing. Put the data back the way it was when the save was made and it loads. This is how the game behaves on Windows too.
 
 `compat.rb` is loaded before the game and covers the two things a translation's bundled RGSS scripts expect from the Windows runtime:
 

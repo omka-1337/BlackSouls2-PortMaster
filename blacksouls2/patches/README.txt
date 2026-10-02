@@ -24,20 +24,21 @@ Game.rvproj2 and the translation's own Game.ini are all unused here.
 Delete these folders again to go back to English.
 
 
-A SAVE CAN STOP LOADING WHEN YOU CHANGE THIS FOLDER
+A SAVE BELONGS TO THE SCRIPT SET THAT MADE IT
 
-Save files live one level up, next to the engine, and adding or removing a
-translation never touches them. A save does store objects of the classes the
-game's scripts define, though, so a translation that adds such a class makes its
-saves unreadable once it is removed, and the other way round.
+Save files live one level up, next to the engine, and what you put in this
+folder never touches them. A save does store objects of the classes the game's
+scripts define, though, and will not load under a script set that is missing one
+of them.
 
-The Russian translation adds one, so its saves and the English ones are not
-interchangeable. Another translation may add nothing that reaches a save, and
-then the save travels fine.
+The reduced Steam build and the full build differ that way, and so can two
+translations. During testing a save made against the full data would not load
+against the reduced Steam scripts: it carried a Game_Map_Effects object those
+scripts have never heard of.
 
-When it does bite the game says nothing. It plays a buzzer on the load screen
-and stays where it is, which looks like the button did nothing. Put the
-translation back the way it was when the save was made and it will load.
+When it bites the game says nothing. It plays a buzzer on the load screen and
+stays where it is, which looks like the button did nothing. Put the data back
+the way it was when the save was made and it will load.
 
 So before changing this folder, either finish what you are playing or keep a
 copy of the saves.
