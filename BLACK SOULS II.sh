@@ -37,7 +37,15 @@ if [ ! -d "$GAMEDIR/stdlib" ]; then
 fi
 
 export LD_LIBRARY_PATH="$GAMEDIR/libs.${DEVICE_ARCH}:$LD_LIBRARY_PATH"
-export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
+# Hand SDL the controller database by file, not by value. ROCKNIX's copy of
+# $sdl_controllerconfig is the whole 476 KB database, and Linux caps a single
+# environment string at 128 KB, so exporting it makes every later exec fail with
+# E2BIG - the engine, grep, pkill, all of it. Firmware that sets
+# SDL_GAMECONTROLLERCONFIG_FILE has already done this properly; older firmware
+# hands over just this device's mapping, which is small and still worth passing.
+if [ -z "${SDL_GAMECONTROLLERCONFIG_FILE:-}" ] && [ "${#sdl_controllerconfig}" -lt 100000 ]; then
+  export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
+fi
 
 $GPTOKEYB2 "$BINARY" -c "$GAMEDIR/blacksouls2.ini" &
 
