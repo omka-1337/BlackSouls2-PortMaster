@@ -56,6 +56,8 @@ Game.rgss3a
 
 Leave behind `Game.exe`, `System/`, `ver.txt` and the `.vdf` files. They are Windows or Steam only and the engine replaces them.
 
+Some copies ship unpacked, with a `Data/` folder in place of `Game.rgss3a`. Copy that folder instead; the port accepts either, and the Korean release is one of them.
+
 The loose `Graphics/` folder matters here. It holds the RTP artwork the game draws on, and only four of its files also exist inside `Game.rgss3a`. For those four the archive wins, which is what the game expects: the archived copies are its own and the loose ones are the stock defaults.
 
 ### 4. Play

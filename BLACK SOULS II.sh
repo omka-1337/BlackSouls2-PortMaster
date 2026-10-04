@@ -24,9 +24,11 @@ cd $GAMEDIR
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
 # The game is a paid title, so its files are user supplied.
-if [ ! -f "$GAMEDIR/Game.rgss3a" ]; then
+# A copy is either encrypted, with Game.rgss3a, or an unpacked project with a
+# loose Data folder. mkxp-z runs both, so accept either.
+if [ ! -f "$GAMEDIR/Game.rgss3a" ] && [ ! -d "$GAMEDIR/Data" ]; then
   echo "Game files not found. See README.md for how to supply them."
-  echo "Expected: $GAMEDIR/Game.rgss3a"
+  echo "Expected: $GAMEDIR/Game.rgss3a or $GAMEDIR/Data/"
   sleep 5
   exit 1
 fi
