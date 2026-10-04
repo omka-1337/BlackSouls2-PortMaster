@@ -12,26 +12,26 @@ The loose `Graphics/` folder matters here. It holds the RTP artwork the game dra
 
 The game renders at 640x480, so it is pixel for pixel on a 640x480 panel with no scaling.
 
-## Translations
+## The patches folder
 
-`blacksouls2/patches/` is mounted above `Game.rgss3a`, so a translation can replace the game's data without the archive being removed or touched. The folder is empty by default, which leaves the game in English.
+`blacksouls2/patches/` is mounted above `Game.rgss3a`. A loose folder next to the engine is not: where the same file exists in both, the archive wins. So anything meant to replace the game's own content goes in `patches/`, and the folder is empty by default, which leaves the game exactly as shipped.
 
-Translations are distributed as a set of RPG Maker folders. Put the content folders directly inside `patches/`:
+Two things usually go in it: the publisher's free patch for the reduced Steam build, and a translation. Both arrive as a set of RPG Maker folders. Put their content folders directly inside `patches/`:
 
 ```
 patches/
 ├── Data/
 ├── Graphics/
-├── Audio/     (only if the translation ships one)
-├── Movies/    (only if the translation ships one)
-└── Fonts/     (only if the translation ships one)
+├── Audio/     (only if it ships one)
+├── Movies/    (only if it ships one)
+└── Fonts/     (only if it ships one)
 ```
 
-Some archives wrap everything in a single top level folder, in which case copy that folder's contents rather than the folder itself. Leave out anything Windows specific: `Game.exe`, `System/`, `*.dll`, `*.vdf`, `Game.rvproj2` and the translation's own `Game.ini` are all unused here. Delete the folders again to go back to English.
+Some archives wrap everything in a single top level folder, in which case copy that folder's contents rather than the folder itself. Leave out anything Windows specific: `Game.exe`, `System/`, `*.dll`, `*.vdf`, `Game.rvproj2` and its own `Game.ini` are all unused here. Delete the folders again to go back.
 
 A save belongs to the script set that made it. Saves sit next to the engine and are never touched by what you put in `patches/`, but a save stores objects of the classes the game's scripts define, and will not load under a script set that is missing one of them. The reduced Steam build and the full build differ that way, and so can two translations. That is what bit here during testing: a save made against the full data would not load against the reduced Steam scripts, because it carried a `Game_Map_Effects` object those scripts have never heard of. The game stays quiet about it: `DataManager.load_game` swallows the error, so the load screen buzzes and sits there as though the button did nothing. Put the data back the way it was when the save was made and it loads. This is how the game behaves on Windows too.
 
-`compat.rb` is loaded before the game and covers the two things a translation's bundled RGSS scripts expect from the Windows runtime:
+`compat.rb` is loaded before the game and covers the two things such bundled RGSS scripts expect from the Windows runtime:
 
 `Win32API`, called while loading by Steamworks achievement scripts and by the Fullscreen++ plugin. There is no Windows DLL to load on this platform, so those calls would kill the game before the title screen. They are made inert instead, and fullscreen is handled by `mkxp.json` anyway.
 
