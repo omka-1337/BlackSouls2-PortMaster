@@ -6,6 +6,8 @@ The game is a paid title, so this port ships the engine only. Copy `Audio/`, `Gr
 
 The Steam release ships a heavily reduced build of the game: its `Game.rgss3a` declares 17 maps where the full release has 409. The publisher offers a free official patch that restores the full game, and it has to be applied to the Steam copy before the files are worth copying here, otherwise the port faithfully runs the reduced build. A copy bought on DLsite is complete as it is. This port was tested against both a reduced and a full set of files.
 
+Note where the patched content ends up. If applying the patch updates `Game.rgss3a` itself, copy that archive across as usual. If it instead leaves loose `Data/`, `Graphics/` or `Audio/` folders beside the archive, those go into `patches/` rather than next to the engine: where the same file exists in both, the archive wins, so copying them alongside the engine would silently leave the reduced build running.
+
 The loose `Graphics/` folder matters here. It holds the RTP artwork the game draws on, and only four of its files also exist inside `Game.rgss3a`; for those four the archive wins, which is what the game expects, since the archived copies are its own and the loose ones are the stock defaults.
 
 The game renders at 640x480, so it is pixel for pixel on a 640x480 panel with no scaling.

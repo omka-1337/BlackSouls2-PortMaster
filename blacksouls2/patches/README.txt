@@ -1,61 +1,28 @@
-This folder is mounted above Game.rgss3a, so anything placed here replaces the
-game's own files without the archive being removed or touched.
+This folder is mounted above Game.rgss3a. A loose folder next to the engine is
+not: where the same file exists in both, the archive wins. So anything meant to
+replace the game's own content goes in here.
 
-Leave it empty and the game runs as shipped, in English.
-
-
-INSTALLING A TRANSLATION
-
-Put the translation's content folders directly inside this folder:
+Two things usually do: the publisher's free patch for the reduced Steam build,
+and a translation. Put their content folders directly inside this one.
 
     patches/
     |-- Data/
     |-- Graphics/
-    |-- Audio/     (only if the translation ships one)
-    |-- Movies/    (only if the translation ships one)
-    `-- Fonts/     (only if the translation ships one)
+    |-- Audio/     (only if it ships one)
+    |-- Movies/    (only if it ships one)
+    `-- Fonts/     (only if it ships one)
 
-Some archives wrap everything in a single top level folder. Copy that folder's
-contents, not the folder itself.
+If the patch updated Game.rgss3a itself rather than leaving loose folders, copy
+that archive over instead and leave this folder alone.
 
-Do not copy anything Windows specific. Game.exe, System/, *.dll, *.vdf,
-Game.rvproj2 and the translation's own Game.ini are all unused here.
+If an archive wraps everything in one top level folder, copy that folder's
+contents, not the folder itself. Leave out Game.exe, System/, *.dll, *.vdf,
+Game.rvproj2 and its own Game.ini. Delete the folders to go back.
 
-Delete these folders again to go back to English.
+Back up your saves before changing this folder. A save belongs to the script set
+that made it, and this bit during testing: a save made against the full data
+would not load against the reduced Steam scripts. The game says nothing, the
+load screen just buzzes and stays there. Putting the data back the way it was
+when the save was made fixes it.
 
-
-A SAVE BELONGS TO THE SCRIPT SET THAT MADE IT
-
-Save files live one level up, next to the engine, and what you put in this
-folder never touches them. A save does store objects of the classes the game's
-scripts define, though, and will not load under a script set that is missing one
-of them.
-
-The reduced Steam build and the full build differ that way, and so can two
-translations. During testing a save made against the full data would not load
-against the reduced Steam scripts: it carried a Game_Map_Effects object those
-scripts have never heard of.
-
-When it bites the game says nothing. It plays a buzzer on the load screen and
-stays where it is, which looks like the button did nothing. Put the data back
-the way it was when the save was made and it will load.
-
-So before changing this folder, either finish what you are playing or keep a
-copy of the saves.
-
-
-WHAT COMPAT.RB TAKES CARE OF
-
-Translations often bundle RGSS scripts written for the Windows runtime.
-compat.rb, one level up, is loaded before the game and smooths over the two
-cases that would otherwise break the port:
-
-Win32API. Steamworks achievement scripts and the Fullscreen++ plugin call it
-while loading. There is no Windows DLL to load on this platform, so those calls
-would kill the game before the title screen. They are made inert instead.
-Fullscreen is handled by mkxp.json anyway.
-
-Graphics.resize_screen. RGSS3 caps the screen at 640x480 and quietly clamps
-anything larger, so a script asking for more is harmless on Windows. mkxp-z
-honours the request, which would squeeze an oversized buffer onto the panel.
-The cap is restored, so the game stays at its native 640x480.
+See README.md one level up for the rest.
