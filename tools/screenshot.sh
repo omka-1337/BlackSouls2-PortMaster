@@ -40,9 +40,6 @@ else:
     if os.path.exists(os.path.join(target, hook)):
         os.remove(os.path.join(target, hook))
     pre = [x for x in pre if x != hook]
-    for f in os.listdir(target):
-        if re.fullmatch(r"screenshot_\d+\.png", f):
-            os.remove(os.path.join(target, f))
 
 # Rewrite the preloadScript line in place, keeping the comments around it.
 new_line = '    "preloadScript": %s,' % json.dumps(pre)
@@ -53,16 +50,36 @@ else:
 open(cfg, "w").write(raw)
 json.loads(re.sub(r"//.*", "", raw))
 
+BLOCK = """
+# >>> screenshot hook, added by tools/screenshot.sh
+[controls:shot_a]
+overlay = parent
+r3 = f9
+
+[controls:shot_b]
+overlay = parent
+l3 = f9
+# <<< screenshot hook
+"""
+
 if os.path.exists(ini):
     t = open(ini).read()
-    t = re.sub(r"^l2 = f9$", "l2 =", t, flags=re.M) if action == "remove" else re.sub(r"^l2 =\s*$", "l2 = f9", t, flags=re.M)
+    t = re.sub(r"\n# >>> screenshot hook.*?# <<< screenshot hook\n", "\n", t, flags=re.S)
+    if action == "install":
+        t = re.sub(r"^l3 =[ \t]*$", "l3 = hold_state shot_a", t, flags=re.M)
+        t = re.sub(r"^r3 =[ \t]*$", "r3 = hold_state shot_b", t, flags=re.M)
+        t = t.rstrip("\n") + "\n" + BLOCK
+    else:
+        t = re.sub(r"^l3 = hold_state shot_a$", "l3 =", t, flags=re.M)
+        t = re.sub(r"^r3 = hold_state shot_b$", "r3 =", t, flags=re.M)
+    t = t.rstrip("\n") + "\n"
     open(ini, "w").write(t)
 
 print(f"{action}: preloadScript = {pre}")
-print(f"{action}: {os.path.basename(ini)} l2 = " + ("f9" if action == "install" else "<blank>"))
+print(f"{action}: {os.path.basename(ini)} L3+R3 " + ("bound" if action == "install" else "cleared"))
 PY
 
 if [ "$action" = "install" ]; then
-  echo "Press L2 in game. Frames land in $target as screenshot_NNN.png."
+  echo "Press L3 + R3 together in game. Frames land in $target/screenshots/."
   echo "Run 'tools/screenshot.sh remove $target' before building a release."
 fi
