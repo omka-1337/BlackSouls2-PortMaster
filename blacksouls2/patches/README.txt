@@ -3,7 +3,8 @@ not: where the same file exists in both, the archive wins. So anything meant to
 replace the game's own content goes in here.
 
 Two things usually do: the publisher's free patch for the reduced Steam build,
-and a translation. Put their content folders directly inside this one.
+and a translation that replaces only part of the game. Put their content
+folders directly inside this one.
 
     patches/
     |-- Data/
@@ -14,6 +15,10 @@ and a translation. Put their content folders directly inside this one.
 
 If the patch updated Game.rgss3a itself rather than leaving loose folders, copy
 that archive over instead and leave this folder alone.
+
+A translation that ships the whole game instead, with its own Data, Graphics and
+Audio, is not an overlay. Put it in the port folder as the game and leave this
+one empty. Keeping both costs twice the space for nothing.
 
 If an archive wraps everything in one top level folder, copy that folder's
 contents, not the folder itself. Leave out Game.exe, System/, *.dll, *.vdf,

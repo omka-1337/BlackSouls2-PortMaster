@@ -70,7 +70,7 @@ Saves are written next to the engine as `Save01.rvdata2` and upward. They surviv
 
 `blacksouls2/patches/` is mounted above `Game.rgss3a`. A loose folder next to the engine is not: where the same file exists in both, the archive wins. So anything meant to replace the game's own content goes in `patches/`, and the folder is empty by default, which leaves the game exactly as shipped.
 
-Two things usually go in it: the publisher's free patch for the reduced Steam build, and a translation. Both arrive as a set of RPG Maker folders. Put their content folders directly inside `patches/`:
+Two things usually go in it: the publisher's free patch for the reduced Steam build, and a translation that replaces only part of the game. Both arrive as a set of RPG Maker folders. Put their content folders directly inside `patches/`:
 
 ```
 patches/
@@ -82,6 +82,8 @@ patches/
 ```
 
 Some archives wrap everything in a single top level folder, in which case copy that folder's contents rather than the folder itself. Leave out anything Windows specific: `Game.exe`, `System/`, `*.dll`, `*.vdf`, `Game.rvproj2` and its own `Game.ini` are all unused here. Delete the folders again to go back.
+
+A translation that ships the whole game instead, with its own `Data`, `Graphics` and `Audio`, is not an overlay. Put it in the port folder as the game and leave `patches/` empty. Keeping both costs twice the space for nothing.
 
 A save belongs to the script set that made it. Saves sit next to the engine and are never touched by what you put in `patches/`, but a save stores objects of the classes the game's scripts define, and will not load under a script set that is missing one of them. The reduced Steam build and the full build differ that way, and so can two translations. That is what bit here during testing: a save made against the full data would not load against the reduced Steam scripts, because it carried a `Game_Map_Effects` object those scripts have never heard of. The game stays quiet about it: `DataManager.load_game` swallows the error, so the load screen buzzes and sits there as though the button did nothing. Put the data back the way it was when the save was made and it loads. This is how the game behaves on Windows too.
 
